@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -19,14 +21,19 @@ namespace LiveOpsKit.Editor
 
         void OnEnable() => settings = ConfigSettings.LoadOrCreate();
 
+        // Event states change as game time moves, so keep repainting.
+        void OnInspectorUpdate() => Repaint();
+
         void OnGUI()
         {
+            DrawClock();
             DrawSource();
             if (loadError != null) EditorGUILayout.HelpBox(loadError, MessageType.Error);
             if (json == null) return;
 
             scroll = EditorGUILayout.BeginScrollView(scroll);
             DrawIssues();
+            DrawEvents();
             EditorGUILayout.EndScrollView();
         }
 
@@ -65,6 +72,53 @@ namespace LiveOpsKit.Editor
                 }
             }
         }
+
+        void DrawClock()
+        {
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            {
+                string travel = LiveOpsClock.IsTimeTravelling ? "  (time travelling)" : "";
+                GUILayout.Label($"Game time: {Format(LiveOpsClock.UtcNow)} UTC{travel}");
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("Time Travel", EditorStyles.toolbarButton)) TimeTravelWindow.Open();
+            }
+        }
+
+        void DrawEvents()
+        {
+            if (config == null || config.events.Count == 0) return;
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Events", EditorStyles.boldLabel);
+            var now = LiveOpsClock.UtcNow;
+
+            foreach (var evt in config.events)
+            {
+                using (new EditorGUILayout.HorizontalScope(EditorStyles.helpBox))
+                {
+                    var state = evt.StateAt(now);
+                    GUILayout.Label(state.ToString(), EditorStyles.boldLabel, GUILayout.Width(70));
+                    GUILayout.Label($"{evt.id}  ({evt.type})", GUILayout.MinWidth(120));
+                    GUILayout.Label($"{evt.startUtc}  to  {evt.endUtc}", EditorStyles.miniLabel);
+                    GUILayout.FlexibleSpace();
+
+                    using (new EditorGUI.DisabledScope(state == EventState.Invalid))
+                        DrawJumpButtons(evt);
+                }
+            }
+        }
+
+        // Jumps to the moments where event bugs usually hide: the start and the last minute.
+        static void DrawJumpButtons(LiveOpsEvent evt)
+        {
+            if (!evt.TryGetWindow(out var start, out var end)) return;
+
+            if (GUILayout.Button("Start", GUILayout.Width(50))) LiveOpsClock.TravelTo(start);
+            if (GUILayout.Button("Last min", GUILayout.Width(64))) LiveOpsClock.TravelTo(end.AddMinutes(-1));
+            if (GUILayout.Button("Ended", GUILayout.Width(52))) LiveOpsClock.TravelTo(end.AddSeconds(1));
+        }
+
+        static string Format(DateTime utc) => utc.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
         void BrowseFile()
         {
