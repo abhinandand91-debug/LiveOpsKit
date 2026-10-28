@@ -32,7 +32,7 @@ Checks included:
 - **Version bump**: version and bundle code / build number are higher than the last release.
 - **Android signing**: a release keystore and alias are set.
 - **Build scenes**: the scene list is not empty and every scene file exists.
-- **Forbidden text**: no `staging.`, `localhost` or `"testMode": true` in `Resources` or `StreamingAssets`.
+- **Forbidden text**: no `staging.`, `localhost` or `"testMode": true` in any `Resources` folder or in `StreamingAssets`.
 
 **Build gate**: once the Release Settings asset exists, every release build runs the checks first. Any error stops the build. Development builds are never blocked.
 

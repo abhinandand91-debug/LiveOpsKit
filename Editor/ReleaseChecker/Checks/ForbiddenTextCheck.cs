@@ -25,9 +25,10 @@ namespace LiveOpsKit.Editor
                 else yield return CheckResult.Error($"Pattern '{pattern}' is not a valid regex.");
             }
 
-            var findings = ShippedFiles(settings.scanFolders).SelectMany(file => Scan(file, patterns)).ToList();
+            var folders = FoldersToScan(settings);
+            var findings = ShippedFiles(folders).SelectMany(file => Scan(file, patterns)).ToList();
             if (findings.Count == 0)
-                yield return CheckResult.Pass($"No forbidden text in {string.Join(", ", settings.scanFolders)}.");
+                yield return CheckResult.Pass($"No forbidden text in {folders.Count} shipped folder(s).");
 
             foreach (string finding in findings)
                 yield return CheckResult.Error(finding);
@@ -41,6 +42,14 @@ namespace LiveOpsKit.Editor
                 int index = Array.FindIndex(lines, line => regex.IsMatch(line));
                 if (index >= 0) yield return $"'{regex}' found in {file} (line {index + 1}).";
             }
+        }
+
+        static List<string> FoldersToScan(ReleaseSettings settings)
+        {
+            var folders = settings.scanFolders.ToList();
+            if (settings.scanAllResourcesFolders)
+                folders.AddRange(Directory.GetDirectories("Assets", "Resources", SearchOption.AllDirectories));
+            return folders.Select(f => f.Replace('\\', '/')).Distinct().ToList();
         }
 
         static IEnumerable<string> ShippedFiles(IEnumerable<string> folders) =>
