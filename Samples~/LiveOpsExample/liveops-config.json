@@ -1,0 +1,21 @@
+{
+  "version": 12,
+  "events": [
+    {
+      "id": "halloween_2026",
+      "type": "seasonal",
+      "startUtc": "2026-10-25T00:00:00Z",
+      "endUtc": "2026-11-02T00:00:00Z",
+      "assets": [],
+      "rewards": [ { "item": "coins", "amount": 5000 }, { "item": "pumpkin_frame", "amount": 1 } ]
+    },
+    {
+      "id": "weekend_tournament",
+      "type": "tournament",
+      "startUtc": "2026-10-31T00:00:00Z",
+      "endUtc": "2026-11-02T00:00:00Z",
+      "assets": [],
+      "rewards": [ { "item": "gems", "amount": 50 } ]
+    }
+  ]
+}
