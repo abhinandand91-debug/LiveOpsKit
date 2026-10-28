@@ -24,7 +24,9 @@ namespace LiveOpsKit.Editor
         public string[] forbiddenDefines = { "DEBUG_MENU", "CHEATS", "ENABLE_CHEATS" };
 
         [Header("Forbidden text in shipped files")]
-        public string[] scanFolders = { "Assets/Resources", "Assets/StreamingAssets" };
+        [Tooltip("Scan every folder named Resources under Assets, wherever it is.")]
+        public bool scanAllResourcesFolders = true;
+        public string[] scanFolders = { "Assets/StreamingAssets" };
         public string[] forbiddenPatterns = { @"staging\.", "localhost", @"""testMode""\s*:\s*true" };
 
         // Call after shipping so the next build must bump its version.
