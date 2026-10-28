@@ -1,0 +1,12 @@
+{
+  "name": "com.abhinandan.liveopskit",
+  "displayName": "LiveOpsKit",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "description": "Editor tools that stop common LiveOps and release mistakes: a pre-build release checker, a LiveOps config validator and a time travel clock for testing timed events.",
+  "keywords": [ "liveops", "release", "build", "validation", "events", "tools" ],
+  "author": { "name": "Abhinandan Dharmadhikari" },
+  "documentationUrl": "https://github.com/abhinandand91-debug/LiveOpsKit#readme",
+  "changelogUrl": "https://github.com/abhinandand91-debug/LiveOpsKit/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/abhinandand91-debug/LiveOpsKit/blob/main/LICENSE"
+}

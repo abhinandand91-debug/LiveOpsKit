@@ -1,0 +1,7 @@
+{
+  "name": "LiveOpsKit.Editor",
+  "rootNamespace": "LiveOpsKit.Editor",
+  "references": [ "LiveOpsKit" ],
+  "includePlatforms": [ "Editor" ],
+  "autoReferenced": true
+}
