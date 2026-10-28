@@ -27,6 +27,16 @@ namespace LiveOpsKit.Editor
         public string[] scanFolders = { "Assets/Resources", "Assets/StreamingAssets" };
         public string[] forbiddenPatterns = { @"staging\.", "localhost", @"""testMode""\s*:\s*true" };
 
+        // Call after shipping so the next build must bump its version.
+        public void RecordCurrentVersion()
+        {
+            lastReleasedVersion = PlayerSettings.bundleVersion;
+            lastReleasedAndroidCode = PlayerSettings.Android.bundleVersionCode;
+            lastReleasedIosBuild = PlayerSettings.iOS.buildNumber;
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+        }
+
         public static ReleaseSettings Load() => AssetDatabase.LoadAssetAtPath<ReleaseSettings>(AssetPath);
 
         public static ReleaseSettings LoadOrCreate()
