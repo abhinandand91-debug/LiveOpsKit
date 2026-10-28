@@ -57,7 +57,7 @@ namespace LiveOpsKit.Editor
             {
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    GUILayout.Label(Icon(result.Severity), GUILayout.Width(20), GUILayout.Height(18));
+                    GUILayout.Label(SeverityIcon.For(result.Severity), GUILayout.Width(20), GUILayout.Height(18));
                     EditorGUILayout.LabelField(result.Message, EditorStyles.wordWrappedLabel);
                     if (result.Fix != null && GUILayout.Button("Fix", GUILayout.Width(50)))
                     {
@@ -77,16 +77,6 @@ namespace LiveOpsKit.Editor
 
             ReleaseSettings.LoadOrCreate().RecordCurrentVersion();
             RunChecks();
-        }
-
-        static GUIContent Icon(Severity severity)
-        {
-            switch (severity)
-            {
-                case Severity.Error: return EditorGUIUtility.IconContent("console.erroricon.sml");
-                case Severity.Warning: return EditorGUIUtility.IconContent("console.warnicon.sml");
-                default: return EditorGUIUtility.IconContent("TestPassed");
-            }
         }
     }
 }
