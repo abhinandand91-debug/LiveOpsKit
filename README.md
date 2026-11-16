@@ -1,4 +1,24 @@
-# LiveOpsKit
+<!-- showcase-header -->
+<div align="center">
+
+<h1>LiveOpsKit</h1>
+
+<p><b>Unity Editor tools that catch the mistakes that break a live game before players see them.</b></p>
+
+<img src="https://img.shields.io/badge/Unity-2022.3%20|%206-000000?style=flat-square&logo=unity&logoColor=white" alt="Unity: 2022.3 | 6"> <img src="https://img.shields.io/badge/UPM-package-2ea44f?style=flat-square" alt="UPM: package"> <img src="https://img.shields.io/badge/dependencies-none-6e7781?style=flat-square" alt="dependencies: none">
+
+<p><a href="https://abhinandand91-debug.github.io/">Portfolio</a></p>
+
+<p><img src="docs/media/shot-1.jpg" width="420" alt="Release Checker">&nbsp;<img src="docs/media/shot-2.jpg" width="420" alt="LiveOps Config: issues found"></p>
+<p><img src="docs/media/shot-3.jpg" width="420" alt="LiveOps Config: event states">&nbsp;<img src="docs/media/shot-4.jpg" width="420" alt="Time Travel"></p>
+<sub>Captured from the three tool windows in the Unity Editor, using the package's sample configs.</sub>
+
+</div>
+
+---
+
+<!-- /showcase-header -->
+## About
 
 Unity editor tools that catch the mistakes that usually break a live game, before players see them.
 
@@ -10,7 +30,7 @@ Unity editor tools that catch the mistakes that usually break a live game, befor
 
 Works with Unity 2022.3 and Unity 6. No dependencies.
 
-## Install
+### Install
 
 In Unity, open **Window > Package Manager > + > Add package from git URL** and paste:
 
@@ -20,7 +40,7 @@ https://github.com/abhinandand91-debug/LiveOpsKit.git
 
 All tools are under **Tools > LiveOpsKit**.
 
-## Release Checker
+### Release Checker
 
 Open **Tools > LiveOpsKit > Release Checker**. It runs every check for the current build target and shows a **Fix** button where a one-click fix is safe.
 
@@ -40,7 +60,7 @@ After you ship, press **Mark as released** so the next build must bump its versi
 
 Settings live in `Assets/LiveOpsKit/ReleaseSettings.asset`.
 
-### Add your own check
+#### Add your own check
 
 Subclass `ReleaseCheck` anywhere in an editor folder. It is picked up automatically.
 
@@ -57,7 +77,7 @@ public class AdsTestModeCheck : ReleaseCheck
 }
 ```
 
-## LiveOps Config
+### LiveOps Config
 
 Open **Tools > LiveOpsKit > LiveOps Config**. Paste your config url and press **Download**, or pick a local json file.
 
@@ -91,7 +111,7 @@ Each event shows its state at game time (Upcoming, Live, Ended) with buttons to 
 
 Add your own rule by subclassing `ConfigRule`.
 
-## Time Travel
+### Time Travel
 
 Read time through `LiveOpsClock` instead of `DateTime.UtcNow`:
 
@@ -104,10 +124,10 @@ Then open **Tools > LiveOpsKit > Time Travel** to move game time by hours or day
 
 Time travel only works in the editor and development builds. Release builds always use real time.
 
-## Samples
+### Samples
 
 Import **LiveOps Example** from the Package Manager to get a clean config, a broken config to see the validator at work, and an `EventBanner` script.
 
-## License
+### License
 
 MIT
